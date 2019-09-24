@@ -115,6 +115,8 @@ function Circle(x, y, r, f){
     }
 
     for(var i=0; i<sirkelArr.length; i++){
+      if(distance(mouse.x, mouse.y, this.x, this.y)<50){this.r+=0.1}
+      else{if(this.r>r){this.r-=0.1}}
       if(this===sirkelArr[i]){continue;}
       if(distance(this.x, this.y, sirkelArr[i].x, sirkelArr[i].y)< this.r + sirkelArr[i].r){
         kollisjon(this, sirkelArr[i])
