@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+    <title> Sirkel eller Kvadrat </title>
+    <meta charset="utf-8">
+<link rel= "stylesheet" href="Innlevering_sirkel_kvadrat.css">
+</head>
+<body>
+
+    <h1> <ul id="meny">
+
+                <li> <a class="menytekst" href="../../Tester/kron_mynt.html">Kron/Mynt</a></li>
+
+                <li><a class="menytekst" href="../../terningspill/terningspill.html">  DiceRoll</a></li>
+
+                    <li><a class="menytekst" href="Innlevering_sirkel_kvadrat.html">Arealkalkulator</a></li>
+
+
+                </ul>
+                </h1>
+
+
+    <img id="figur">
+
+    <ul>
+    <li id="tekst"></li>
+    <li id="tekst2"></li>
+    <li id="tekst3"></li>
+    </ul>
+
+
+
+
+<script>
+
+    var figur=document.getElementById("figur");
+    var tekst=document.getElementById("tekst");
+    var tekst2=document.getElementById("tekst2");
+    var tekst3=document.getElementById("tekst3")
+    var form= prompt("Sirkel eller Kvadrat?");
+
+    if(form==="sirkel"||form==="Sirkel"){
+       var sirkel= Number(prompt("Skriv inn radius på sirkelen"))
+        tekst.innerHTML="Areal:"+sirkel*sirkel*3.14
+        tekst2.innerHTML="Omkrets:"+2*sirkel*3.14
+        figur.src="sirkel.png"
+    }
+    else if(form==="Kvadrat"||form==="kvadrat"){
+        var kvadrat= Number(prompt("Skriv inn sidelengde på kvadratet"))
+        console.log(kvadrat)
+        tekst.innerHTML="Areal: "+kvadrat*kvadrat
+        tekst2.innerHTML="Omkrets: "+4*kvadrat
+        figur.src="kvadrat.png"
+    }
+
+    var As = sirkel*sirkel*3.14
+    var Ak = kvadrat*kvadrat
+
+    if (As<10||Ak<10) {
+        tekst3.innerHTML="Dette var en liten figur"
+    }
+    else if ((As>10 && As<50)||(Ak>10 && Ak<50)){
+        tekst3.innerHTML="Dette var en middels figur"
+    }
+    else if (As>50 || Ak>50){
+        tekst3.innerHTML="Dette var en stor figur"
+    }
+
+
+
+
+    </script>
+
+
+
+    </body>
+</html>

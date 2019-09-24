@@ -1,0 +1,105 @@
+html {
+    
+    background-color: #e6e9e9;
+    padding-left: 50px;
+    padding-right: 50px;
+    
+    
+    
+    
+}
+body{
+    
+    background-color: #fff;
+    border-style:groove;
+   
+   
+        
+}
+
+    
+
+#overskrift {
+    
+    
+    text-align: center;
+    margin-top: 1px;
+
+    text-decoration-color:brown;
+    font-family: monospace;
+
+    
+        
+    
+    
+    
+    
+    
+    
+    
+}
+.tekst {
+    
+    font-weight: bold;
+    font-family: serif;
+    font-size: 18px;
+    text-align: center;
+    
+}
+
+.midstill {
+    
+    text-align: center;
+    
+}
+
+#terning1{
+    width: 120px;
+    height: 120px;
+    margin-bottom: 50px;
+    outline: 0;
+}
+#kast{
+    width: 200px;
+    height: 200px;
+    margin-bottom: 100px;
+    
+    
+    
+}
+
+#meny{
+    
+    font-family: monospace;
+    font-size: 15px;
+    list-style-type: none;
+    background-color: #f1f1f1;
+    width: 150px;
+    margin:0;
+    padding:0;
+    
+}
+.menytekst{
+    
+    display: block;
+    padding:8px 16px;
+    text-decoration: none;
+    color:#000;
+    
+}
+    
+.menytekst:hover{
+    background-color: #555;
+    color:#000;
+}    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+}

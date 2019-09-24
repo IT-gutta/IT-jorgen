@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Cute+Font&display=swap');
+
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  background-color: #90EE90;
+}
+html{
+  position: relative;
+}
+.cover{
+  text-align: center;
+  font-family: "Cute Font", sans-serif;
+  font-size: 30px;
+}
+.farge{
+  background-color: white;
+  font-family: "Cute Font", sans-serif;
+  font-size: 35px;
+}
+
+#confetti{
+  width: 100%;
+  height: 90%;
+
+}
+#canon{
+position: absolute;
+top: -500px;
+left: 100px;
+width: 1200px;
+height: 1170px;
+}
+#loose{
+  width: 100%;
+  height: 80%;
+}

@@ -1,0 +1,51 @@
+#boks
+
+{
+    color: black;
+    padding-left: 100px;
+    font-family: fantasy;
+    font-size: 40px;
+    font-weight: lighter;
+    background-color: gold;
+border: solid 5px;
+    border-color: darksalmon
+}
+
+
+
+#table {
+
+    border: solid 3px;
+    margin: 10px ;
+    padding: 10px;
+    background-color: darksalmon;
+        color: black;
+    font-family: monospace ;
+    font-size: 30px;
+        font-weight: bold;
+    text-align: center;
+
+
+
+
+}
+
+#liste {
+
+     border: solid 3px;
+    margin: 10px ;
+    padding: 10px;
+    background-color: darksalmon;
+        color: black;
+    font-family: monospace ;
+    font-size: 30px;
+        font-weight: bold;
+
+}
+
+#th {
+    font-weight: bolder;
+    color: gold;
+    font-family: serif;
+
+}

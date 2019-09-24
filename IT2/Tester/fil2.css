@@ -1,0 +1,26 @@
+*{
+  margin: 0px;
+  padding: 0px;
+
+}
+#h1{
+  margin-left: 100px;
+}
+#display{
+  text-align: left;
+  background-color: black;
+  color: white;
+  width:232px;
+  border-radius: 7px;
+}
+#pad{
+  font-size: 60px;
+text-align: center;
+margin-left: 100px;
+}
+.knapp{
+  width: 50px;
+  height: 100px;
+  border: solid black;
+  border-radius: 8px;
+}

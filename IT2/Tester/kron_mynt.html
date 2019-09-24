@@ -1,0 +1,64 @@
+
+
+ <!doctype html>
+<html>
+<head>
+    <title> </title>
+    <meta charset="utf-8">
+ <link rel= "stylesheet" 
+       href="kron_mynt.css">
+</head>
+<body> 
+    
+    <h1>
+     <ul id="meny">
+                    
+                <li> <a class="menytekst" href="kron_mynt.html">Kron/Mynt</a></li>
+                    
+                <li><a class="menytekst" href="../terningspill/terningspill.html">  DiceRoll</a></li>   
+                    
+                <li> <a class="menytekst" href="../RockPaperScissor/rps.html"> SteinSaksPapir
+                </a></li>
+                
+                
+                </ul>
+                
+    </h1>
+    <p id="tekst">
+    
+    </p>
+    
+    <div id=div1>
+    
+   <a id="link"> <img id="bilde">
+        </a> 
+    </div>
+    
+    
+    
+    <script>
+    
+    var bilde= document.getElementById("bilde");
+        var tekst= document.getElementById("tekst");
+        var link= document.getElementById("link");
+    
+    var tilfeldig= Math.floor(Math.random()*2);
+    
+    if(tilfeldig==0){
+        
+        bilde.src="../Bilder/Saved%20Pictures/mynt.png";
+        tekst.innerHTML="Mynt";
+        link.href="kron_mynt.html";
+            
+   
+    }
+        else{
+            
+            bilde.src="../Bilder/Saved%20Pictures/kron.png";
+            tekst.innerHTML="Kron"
+           link.href="kron_mynt.html";
+        }
+    
+    </script>
+     </body>
+</html>

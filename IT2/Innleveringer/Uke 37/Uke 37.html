@@ -1,0 +1,139 @@
+
+
+ <!doctype html>
+<html style="background-color: darkslategrey">
+<head>
+    <title> Innlevering</title>
+    <meta charset="utf-8">
+<!--    <link rel= "stylesheet" href="xxxxxxx">-->
+</head>
+<body> 
+    
+    <div id="bilde" class="bildene"></div>
+    <div id="tekst2" style="font-weight: bold; font-family: monospace; font-size: 40px"></div>
+    
+<script>
+    
+    var tekst=document.getElementById("bilde");
+    var tekst2=document.getElementById("tekst2")
+    var tall=prompt("Skriv inn et tall fra 1 til 6");
+    var bilder=["dice1.png","dice2.png", "dice3.png","dice4.png","dice5.png", "dice6.png"];
+    var alleLike="";
+    
+     if (tall<=6){
+    for(var i=0; i<tall; i++){
+        var b=Math.floor(Math.random()*6)+1
+        tekst.innerHTML+='<img src=' +bilder[b-1] + '>'
+        alleLike+=String(b)
+    }}
+    else{
+        tekst.innerHTML="Jeg sa: SKRIV INN ETT TALL MELLOM 1 OG 6!!"
+        tekst.style.fontSize="50px"
+        
+       function load(){
+           document.location.reload()
+       }
+    setTimeout(load, 4000)
+    }
+    
+  if ( alleLike=="111111"||
+     alleLike=="222222"||
+     alleLike=="333333"||
+     alleLike=="444444"||
+     alleLike=="555555"||
+     alleLike=="000000")     
+     {
+     
+     tekst2.innerHTML="Yes, du fikk YATZEE!!"
+     }
+    console.log(alleLike);
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</script>
+    
+    
+    
+     </body>
+</html>
+
+
+
+
+<!--
+<html style="background-color: darkslategrey">
+<head>
+    <title> Innlevering</title>
+    <meta charset="utf-8">
+    <link rel= "stylesheet" href="xxxxxxx">
+</head>
+<body> 
+    
+    <div id="bilde" class="bildene"></div>
+    <div id="tekst2" style="font-weight: bold; font-family: monospace; font-size: 40px"></div>
+    
+<script>
+    var a = 0;
+    var tekst=document.getElementById("bilde");
+    var tekst2=document.getElementById("tekst2")
+    var tall=prompt("Skriv inn et tall fra 1 til 6");
+    var bilder=["dice1.png","dice2.png", "dice3.png","dice4.png","dice5.png", "dice6.png"];
+    var aL=[]
+     
+    
+     if (tall<=6){
+    for(var i=0; i<tall; i++){
+        var b = Math.floor(Math.random()*6)
+        tekst.innerHTML+='<img src=' +bilder[b] + '>'
+        aL[i]+=String(b)
+    }}
+    else{
+        tekst.innerHTML="Jeg sa: SKRIV INN ETT TALL MELLOM 1 OG 6!!"
+        tekst.style.fontSize="50px"
+        
+       function load(){
+           document.location.reload()
+       }
+    setTimeout(load, 4000)
+    }
+    
+if(aL[a]==aL[a+1]==aL[a+2]==aL[a+3]==aL[a+4]==aL[a+5]){
+    tekst2.innerHTML="YESS! DU FIKK YATZYY!!!"
+}
+
+else if(aL[a]==aL[a+1]==aL[a+2]==aL[a+3]==aL[a+4]!=aL[a+5]){
+    tekst2.innerHTML="YESS! DU FIKK YATZYY!!!"
+}
+else if (aL[a]==aL[a+1]==aL[a+2]==aL[a+3]!=aL[a+4]!=aL[a+5]){
+    tekst2.innerHTML="YESS! DU FIKK YATZYY!!!"
+}
+else if (aL[a]==aL[a+1]==aL[a+2]!=aL[a+3]!=aL[a+4]!=aL[a+5]){
+    tekst2.innerHTML="YESS! DU FIKK YATZYY!!!"
+}
+else if (aL[a]==aL[a+1]!=aL[a+2]!=aL[a+3]!=aL[a+4]!=aL[a+5]){
+    tekst2.innerHTML="YESS! DU FIKK YATZYY!!!"
+}
+
+
+    
+
+    
+    
+    
+    
+    
+    
+</script>
+    
+    
+    
+     </body>
+</html>-->

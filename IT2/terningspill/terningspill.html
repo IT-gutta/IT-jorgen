@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+    
+    <head>   <title> Terningspill </title>  <meta charset="utf-8">   <link rel="stylesheet" href="terningspill.css"> </head>
+       
+    
+   
+      
+        <body>
+        
+     
+            <h1> 
+                <ul id="meny">
+                    
+                <li> <a class="menytekst" href="../Tester/kron_mynt.html">Kron/Mynt</a></li>
+                    
+                <li><a class="menytekst" href="../terningspill/terningspill.html">  DiceRoll</a></li>   
+                 <li> <a class="menytekst" href="../RockPaperScissor/rps.html"> SteinSaksPapir
+                    </a></li>
+                
+                </ul>
+                
+                
+                <p id="overskrift"> DiceRoll </p> </h1>
+        
+       
+            
+            <p class="tekst"> Trykk på knappen under for å slå terningen</p>
+         <div class= midstill>
+             <img id="terning1" src="terning.jpg" alt="terningknapp" usemap="#terning">
+             <map name="terning">
+                 <area shape="circle" coords="60,57,50" id= "map1" href="terningspill.html">
+                 
+             
+             </map>
+            
+            
+            </div>   
+            
+            <div class=midstill>
+             <img id="kast">
+            </div>
+        
+        
+        
+        <script>
+            
+            var map1=document.getElementById("map1");
+            var tall1= Number(Math.floor(Math.random()*6)+1);
+            var kast= document.getElementById("kast");
+                                           
+                                              
+        if(tall1==1)
+            {
+                
+            kast.src="terningkast.gif"
+            setTimeout(function dice1(){
+            kast.src="dice1.png"
+                
+            },1700);
+            
+                
+                
+            }
+        else if(tall1==2){
+            
+             kast.src="terningkast.gif"
+            setTimeout(function dice1(){
+            kast.src="dice2.png"
+                
+            },1300);
+        }    
+                else if(tall1==3){
+            
+            kast.src="terningkast.gif"
+            setTimeout(function dice1(){
+            kast.src="dice3.png"
+                
+            },1300);
+        } 
+                else if(tall1==4){
+             kast.src="terningkast.gif"
+            setTimeout(function dice1(){
+            kast.src="dice4.png"
+                
+            },1300);
+        }    
+               else if(tall1==5){
+            
+        kast.src="terningkast.gif"
+            setTimeout(function dice1(){
+            kast.src="dice5.png"
+                
+            },1300);
+        }    
+             
+                else if(tall1==6){
+            
+          kast.src="terningkast.gif"
+            setTimeout(function dice1(){
+            kast.src="dice6.png"
+                
+            },1300);
+        }    
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            </script>
+        
+        
+        
+        
+        
+        </body>
+    
+    
+    </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
