@@ -4,53 +4,104 @@ canvas.width= window.innerWidth-40;
 canvas.height= window.innerHeight-40;
 
 
-function kollisjon(particle, otherparticle){
-  const diffX= otherparticle.x - particle.x;
-  const diffY= otherparticle.y - particle.y;
+function rotate(fart, angle) {
+    const rotatedVelocities = {
+        x: fart.x * Math.cos(angle) - fart.y * Math.sin(angle),
+        y: fart.x * Math.sin(angle) + fart.y * Math.cos(angle)
+    };
 
-  const fartDiffX= otherparticle.fart.x - particle.fart.x;
-  const fartDiffY= otherparticle.fart.y - particle.fart.y;
-
-  if(fartDiffX*diffX + fartDiffY*diffY >=0){
-
-  const angle= Math.atan2(diffY/diffX);
-
-  const m1= particle.mass;
-  const m2= otherparticle.mass;
-
-  const vFor1= particle.fart.rotate(angle);
-  const vFor2= otherparticle.fart.rotate(angle);
-
-  const v1= { x: (m1-m2)*vFor1.x/(m1+m2) + 2*m2*vFor2.x/(m1+m2), y:vFor1.y}
-  const v2= { x: 2*m1*vFor1.x/(m1+m2) - (m1-m2)*vFor2.x/(m1+m2), y:vFor2.y}
-
-  const vEtter1= rotate(v1, -angle);
-  const vEtter2= rotate(v2, -angle);
-
-  particle.fart.x= vEtter1.x
-  particle.fart.y= vEtter1.y
-
-  otherparticle.fart.x= vEtter2.x
-  otherparticle.fart.y= vEtter2.y
-}
+    return rotatedVelocities;
 }
 
-function Circle(x, y, r, r2, radians, f){
+function kollisjon(particle, otherParticle) {
+    const xVelocityDiff = particle.fart.x - otherParticle.fart.x;
+    const yVelocityDiff = particle.fart.y - otherParticle.fart.y;
+
+    const xDist = otherParticle.x - particle.x;
+    const yDist = otherParticle.y - particle.y;
+
+    // Prevent accidental overlap of particles
+    if (xVelocityDiff * xDist + yVelocityDiff * yDist >= 0) {
+
+        // Grab angle between the two colliding particles
+        const angle = -Math.atan2(otherParticle.y - particle.y, otherParticle.x - particle.x);
+
+        // Store mass in var for better readability in collision equation
+        const m1 = particle.mass;
+        const m2 = otherParticle.mass;
+
+        // Velocity before equation
+        const u1 = rotate(particle.fart, angle);
+        const u2 = rotate(otherParticle.fart, angle);
+
+        // Velocity after 1d collision equation
+        const v1 = { x: u1.x * (m1 - m2) / (m1 + m2) + u2.x * 2 * m2 / (m1 + m2), y: u1.y };
+        const v2 = { x: u2.x * (m1 - m2) / (m1 + m2) + u1.x * 2 * m2 / (m1 + m2), y: u2.y };
+
+        // Final fart after rotating axis back to original location
+        const vFinal1 = rotate(v1, -angle);
+        const vFinal2 = rotate(v2, -angle);
+
+        // Swap particle velocities for realistic bounce effect
+        particle.fart.x = vFinal1.x;
+        particle.fart.y = vFinal1.y;
+
+        otherParticle.fart.x = vFinal2.x;
+        otherParticle.fart.y = vFinal2.y;
+    }
+}
+
+
+
+
+// function kollisjon(particle, otherparticle){
+//   const diffX= otherparticle.x - particle.x;
+//   const diffY= otherparticle.y - particle.y;
+//
+//   const fartDiffX= particle.fart.x - otherparticle.fart.x;
+//   const fartDiffY= particle.fart.y - otherparticle.fart.y;
+//
+//   if(fartDiffX*diffX + fartDiffY*diffY >=0){
+//
+//   const angle= -Math.atan2(diffY/diffX);
+//
+//   const m1= particle.mass;
+//   const m2= otherparticle.mass;
+//
+//   const vFor1= rotate(particle.fart, angle);
+//   const vFor2= rotate(otherparticle.fart, angle);
+//
+//   const v1= { x: (m1-m2)*vFor1.x/(m1+m2) + 2*m2*vFor2.x/(m1+m2), y:vFor1.y}
+//   const v2= { x: (m1-m2)*vFor2.x/(m1+m2) + 2*m2*vFor1.x/(m1+m2), y:vFor2.y}
+//
+//   const vEtter1= rotate(v1, -angle);
+//   const vEtter2= rotate(v2, -angle);
+//
+//   particle.fart.x= vEtter1.x;
+//   particle.fart.y= vEtter1.y;
+//
+//   otherparticle.fart.x= vEtter2.x;
+//   otherparticle.fart.y= vEtter2.y;
+// }
+// }
+
+function Circle(x, y, r, f){
   this.x = x,
   this.y= y,
   this.r=r,
+  this.f=f,
   this.fart= {
-    x:2,
-    y:2,
+    x: Math.random()+1,
+    y: Math.random()+1,
   },
 
   this.mass=1,
 
   this.draw= function(){
     c.beginPath();
+    c.fillStyle= this.f;
     c.arc(this.x, this.y, this.r, 0, 2*Math.PI);
-    c.strokeStyle= this.f;
-    c.stroke();
+    c.fill();
   }
 
   this.update= function(){
@@ -66,7 +117,6 @@ function Circle(x, y, r, r2, radians, f){
     for(var i=0; i<sirkelArr.length; i++){
       if(this===sirkelArr[i]){continue;}
       if(distance(this.x, this.y, sirkelArr[i].x, sirkelArr[i].y)< this.r + sirkelArr[i].r){
-        console.log("Kollisjon")
         kollisjon(this, sirkelArr[i])
       }
     }
@@ -92,17 +142,6 @@ var fargeArr=["#12355B", "#D72638", "#FF570A", "#3F826D", "#A9FFF7"]
 var sirkelArr=[]
 var rArr=[]
 
-// function riktigPlass(){
-//   x=Math.random()*canvas.width-r;
-//   y=Math.random()*canvas.height-r;
-// if(i>0){
-// for(var j=1; j<posArr.length; j++){
-//   if(j!=i && x-r<0 || y-r<0 || Math.sqrt(Math.pow(posArr[i][0]-posArr[j][0], 2)+
-//   Math.pow(posArr[i][1]-posArr[j][1], 2)) < rArr[i]+rArr[j])
-//   {x=Math.random()*canvas.width-r;
-//   y=Math.random()*canvas.height-r;
-// j=-1}
-// }}}
 function distance(x1, y1, x2, y2){
   return Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2))
 }
@@ -110,8 +149,8 @@ function distance(x1, y1, x2, y2){
 
 
 
-for(var i=0; i<5; i++){
-  const r=Math.random()*20+30
+for(var i=0; i<50; i++){
+  const r=Math.random()*10+10
   let x=Math.random()* (canvas.width-2*r)+ r;
   let y=Math.random()* (canvas.height-2*r)+ r;
   let f= fargeArr[Math.floor(Math.random()*fargeArr.length)]
@@ -125,6 +164,7 @@ if(distance(x, y, sirkelArr[j].x, sirkelArr[j].y)< sirkelArr[j].r+r){
 
   sirkelArr.push(new Circle(x, y, r, f))
 }
+
 
 
 function animate(){
