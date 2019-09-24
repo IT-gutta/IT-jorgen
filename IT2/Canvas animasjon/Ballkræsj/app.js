@@ -188,6 +188,13 @@ c.clearRect(0, 0, innerWidth, innerHeight);
   for(var i=0; i<sirkelArr.length; i++){
     sirkelArr[i].update();
   }
+
+//tekst
+c.fillText(canvas.width/2, canvas.height/2, "HEiu")
+c.fill();
+
+
+
 }
 animate();
 
