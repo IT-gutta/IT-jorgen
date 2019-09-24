@@ -1,8 +1,10 @@
 var canvas= document.getElementById('canvas');
 var c= canvas.getContext("2d");
+function size(){
 canvas.width= window.innerWidth-40;
 canvas.height= window.innerHeight-40;
-
+}
+size();
 
 function rotate(fart, angle) {
     const rotatedVelocities = {
@@ -121,7 +123,7 @@ function Circle(x, y, r, f){
       this.fart.y=-this.fart.y;
     }
 
-    if(distance(mouse.x, mouse.y, this.x, this.y)<100){if(this.r<r*10){this.r+=5}; if(this.alpha<1){this.alpha+=0.01}}
+    if(distance(mouse.x, mouse.y, this.x, this.y)<100){if(this.r<r*7){this.r+=5}; if(this.alpha<1){this.alpha+=0.01}}
     else{if(this.r>r){this.r-=5}; if(this.alpha>0.1){this.alpha-=0.005}}
 
     for(var i=0; i<sirkelArr.length; i++){
@@ -180,9 +182,14 @@ if(distance(x, y, sirkelArr[j].x, sirkelArr[j].y)< sirkelArr[j].r+r){
 
 function animate(){
   requestAnimationFrame(animate);
+  // c.fillStyle= "rgb(255, 255, 255, 0.2)"
+  // c.fillRect(0, 0, canvas.width, canvas.height)
 c.clearRect(0, 0, innerWidth, innerHeight);
   for(var i=0; i<sirkelArr.length; i++){
     sirkelArr[i].update();
   }
 }
 animate();
+
+
+window.addEventListener("resize", size);
