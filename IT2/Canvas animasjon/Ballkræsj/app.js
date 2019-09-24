@@ -90,18 +90,25 @@ function Circle(x, y, r, f){
   this.y= y,
   this.r=r,
   this.f=f,
+  this.alpha= 0.1,
   this.fart= {
-    x: Math.random()+1,
-    y: Math.random()+1,
+    x: Math.random()*2-1,
+    y: Math.random()*2-1,
   },
 
   this.mass=1,
 
   this.draw= function(){
     c.beginPath();
+    c.strokeStyle= this.f;
     c.fillStyle= this.f;
+    c.globalAlpha= 0.1;
+    c.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+    c.stroke();
+    c.globalAlpha= this.alpha;
     c.arc(this.x, this.y, this.r, 0, 2*Math.PI);
     c.fill();
+
   }
 
   this.update= function(){
@@ -114,9 +121,10 @@ function Circle(x, y, r, f){
       this.fart.y=-this.fart.y;
     }
 
+    if(distance(mouse.x, mouse.y, this.x, this.y)<100){if(this.r<r*10){this.r+=5}; if(this.alpha<1){this.alpha+=0.01}}
+    else{if(this.r>r){this.r-=5}; if(this.alpha>0.1){this.alpha-=0.005}}
+
     for(var i=0; i<sirkelArr.length; i++){
-      if(distance(mouse.x, mouse.y, this.x, this.y)<50){this.r+=0.1}
-      else{if(this.r>r){this.r-=0.1}}
       if(this===sirkelArr[i]){continue;}
       if(distance(this.x, this.y, sirkelArr[i].x, sirkelArr[i].y)< this.r + sirkelArr[i].r){
         kollisjon(this, sirkelArr[i])
@@ -140,7 +148,8 @@ window.addEventListener("mousemove", function(event){
 
 
 
-var fargeArr=["#12355B", "#D72638", "#FF570A", "#3F826D", "#A9FFF7"]
+// var fargeArr=["#12355B", "#D72638", "#FF570A", "#3F826D", "#A9FFF7"]
+var fargeArr=["rgba(65, 168, 241, 1)", "rgba(217, 38, 122, 1)", "rgba(255, 130, 41, 1)", "rgba(0, 219, 161, 1)", "rgba(255, 253, 158, 1)"]
 var sirkelArr=[]
 var rArr=[]
 
@@ -151,7 +160,7 @@ function distance(x1, y1, x2, y2){
 
 
 
-for(var i=0; i<50; i++){
+for(var i=0; i<200; i++){
   const r=Math.random()*10+10
   let x=Math.random()* (canvas.width-2*r)+ r;
   let y=Math.random()* (canvas.height-2*r)+ r;
