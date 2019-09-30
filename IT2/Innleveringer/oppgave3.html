@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="oppgave3.css">
+
+  </head>
+  <body>
+
+    <div id="tekst">
+
+    </div>
+    <script>
+
+      var radius= Math.random()*9+1;
+      var tekst= document.getElementById('tekst');
+      var areal= (radius*radius*Math.PI).toFixed(2);
+      var omkrets= (radius*Math.PI*2).toFixed(2);
+      tekst.innerHTML = "Arealet av sirkelen er " + areal.toString().bold() + "<br> Omkretsen er " + omkrets.toString().bold()
+      if(areal==omkrets){tekst.innerHTML+= "<br> Arealet er like stort som omkretsen"}
+
+
+    </script>
+
+  </body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      #per{
+        font-size: 14px;
+        color: "red";
+        background-color: "grey"
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="per">
+      Arealet av sirkelen er <span id="areal" class="tall"></span> kvadratmeter <br>
+      Omkretsen er <span id="omkrets" class="tall"></span> meter
+
+    </div>
+    <script>
+
+      var radius= Math.random()*9+1;
+      var tekst= document.getElementById('tekst');
+      var omkretsTekst= document.getElementById('omkrets')
+      var arealTekst= document.getElementById('areal')
+      var areal= (radius*radius*Math.PI).toFixed(2);
+      var omkrets= (radius*Math.PI*2).toFixed(2);
+arealTekst.innerHTML= areal;
+omkretsTekst.innerHTML= omkrets;
+
+      if(areal==omkrets){tekst.innerHTML+= "<br> Arealet er like stort som omkretsen"}
+
+
+    </script>
+
+  </body>
+</html> -->

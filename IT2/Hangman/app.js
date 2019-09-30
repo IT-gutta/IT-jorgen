@@ -91,6 +91,19 @@ if(input.value!=""){
     div.innerHTML= "<img id='canon' src='canon.gif'>"; setTimeout(function(){
       div.innerHTML="<h1 id='vinner'> DU VANT BROR</h1>" + "<img id='confetti' src='confetti.gif'>"}, 1500) }
 
+function enter(event){
+  if(event.keyCode==13){
+    console.log("hei")
+    var inc=0;
+  if(input.value!=""){
+    if(input.value.toUpperCase()==str){
+      div.innerHTML= "<img id='canon' src='canon.gif'>"; setTimeout(function(){
+        div.innerHTML="<h1 id='vinner'> DU VANT BROR</h1>" + "<img id='confetti' src='confetti.gif'>"}, 1500)
+  }
+}
+}}
+window.addEventListener("keydown", enter)
+
   for(var i=0; i<str.length; i++){
     if(input.value.toUpperCase() == str[i].toUpperCase()){str2.splice(i, 1, input.value.toUpperCase());
     rLetters.innerHTML= "Gjettede bokstaver:" + str2.join(" "); inc++}
