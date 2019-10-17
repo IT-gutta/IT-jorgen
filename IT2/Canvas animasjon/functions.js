@@ -88,7 +88,11 @@ function fillColor(r, g, b, a){
     let color_red, color_green, color_blue, color_alpha;
     color_red = r /*.toString()*/;
     //Alle parametere til stede
-    
+    if((typeof r) == "string"){
+        let color = r
+    }
+
+else{
     if((!!r || r==0) && (!!g || g==0) && (!!b||b==0) && (!!a || a==0)){ color_alpha = a /*.toString()*/; color_green = g /*.toString()*/; color_blue = b /*.toString()*/}
     //Bare rgb
     else if((!!r || r==0) && (!!g || g==0) && (!!b || b==0) && !a){ color_alpha = 1; color_green = g /*.toString()*/; color_blue = b /*.toString()*/ }
@@ -97,9 +101,8 @@ function fillColor(r, g, b, a){
     //Bare farge
     else if((!!r || r==0) && !g && !b && !a){ color_alpha = 1; color_green = color_red; color_blue = color_red }
 
-
     let color = `rgba(${color_red}, ${color_green}, ${color_blue}, ${color_alpha})`
-    c.strokeStyle = color;
+}
     c.fillStyle = color;
 
     return color
@@ -112,7 +115,11 @@ function strokeColor(r, g, b, a){
     let color_red, color_green, color_blue, color_alpha;
     color_red = r /*.toString()*/;
     //Alle parametere til stede
+    if((typeof r) == "string"){
+        let color = r
+    }
     
+else{
     if((!!r || r==0) && (!!g || g==0) && (!!b||b==0) && (!!a || a==0)){ color_alpha = a /*.toString()*/; color_green = g /*.toString()*/; color_blue = b /*.toString()*/}
     //Bare rgb
     else if((!!r || r==0) && (!!g || g==0) && (!!b || b==0) && !a){ color_alpha = 1; color_green = g /*.toString()*/; color_blue = b /*.toString()*/ }
@@ -121,10 +128,9 @@ function strokeColor(r, g, b, a){
     //Bare farge
     else if((!!r || r==0) && !g && !b && !a){ color_alpha = 1; color_green = color_red; color_blue = color_red }
 
-
     let color = `rgba(${color_red}, ${color_green}, ${color_blue}, ${color_alpha})`
+}
     c.strokeStyle = color;
-    c.fillStyle = color;
 
     return color
 }
@@ -136,7 +142,11 @@ function color(r, g, b, a){
     let color_red, color_green, color_blue, color_alpha;
     color_red = r /*.toString()*/;
     //Alle parametere til stede
+    if((typeof r) == "string"){
+        let color = r
+    }
     
+else{
     if((!!r || r==0) && (!!g || g==0) && (!!b||b==0) && (!!a || a==0)){ color_alpha = a /*.toString()*/; color_green = g /*.toString()*/; color_blue = b /*.toString()*/}
     //Bare rgb
     else if((!!r || r==0) && (!!g || g==0) && (!!b || b==0) && !a){ color_alpha = 1; color_green = g /*.toString()*/; color_blue = b /*.toString()*/ }
@@ -145,8 +155,8 @@ function color(r, g, b, a){
     //Bare farge
     else if((!!r || r==0) && !g && !b && !a){ color_alpha = 1; color_green = color_red; color_blue = color_red }
 
-
     let color = `rgba(${color_red}, ${color_green}, ${color_blue}, ${color_alpha})`
+}
     c.strokeStyle = color;
     c.fillStyle = color;
 
