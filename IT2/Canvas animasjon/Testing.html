@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <script src="functions.js"></script>
+    <script>
+    createCanvas(800, 800)
+    background(1, 0.5)
+    color(0, 200, 255)
+    strokeWeight(10)
+    line(0, 0, 100, 100)
+    doStroke(false)
+    fillColor(100, 0, 0)
+    strokeWeight(1)
+    rect(100, 100, 200, 200)
+
+    let pos1 = new Vector(canvas.width/2, canvas.height/2)
+    let pos1 = new Vector(800, 200)
+    let vel = new Vector(10, 20)
+
+   vel.mult(20);
+   pos.add(vel);
+   pos2.sub(pos1);
+   vel.mag(0.3);
+   vel.normalize();
+   vel.normalizeMult();
+
+    
+    
+    
+    </script>
+
+
+</body>
+</html>
