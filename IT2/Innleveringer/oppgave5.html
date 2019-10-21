@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let string="4, 2, -4, -313"
+      function toArr(str){
+      return  str.split(",").map(Number)
+      }
+
+
+      function traverser(arr){
+        for(var i=0; i<arr.length; i++){
+          console.log(arr[i])
+        }
+      }
+
+      traverser(toArr(string))
+
+      function multiply(sum, num){
+        return sum*num;
+      }
+
+      console.log(toArr(string).reduce(multiply))
+
+      for(var i=0; i<toArr(string).length; i++){
+        if(toArr(string)[i]<0){console.log(toArr(string)[i])}
+      }
+
+    </script>
+
+  </body>
+</html>

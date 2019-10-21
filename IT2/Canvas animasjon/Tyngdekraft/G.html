@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Baller og krefter</title>
+    </head>
+<canvas></canvas>
+<script>
+
+const canvas = document.querySelector("canvas");
+const c = canvas.getContext("2d");
+canvas.width = window.innerWidth-20;
+canvas.height = window.innerHeight-20;
+
+const gravity = 1;
+
+window.addEventListener("resize", function(){
+    canvas.width = window.innerWidth-20;
+canvas.height = window.innerHeight-20;
+})
+
+class Ball{
+    constructor(x, y, r, color){
+        this.pos = { x: x, y: y }
+        this.vel = { x: 0, y: 0 }
+        this.acc = { x: 0, y: gravity }
+        this.color = color;
+        this.r = r;
+        this.mass = this.r*10
+        this.count = 0;
+    }
+    
+
+    draw(){
+        c.beginPath();
+        c.fillStyle = this.color;
+        c.arc(this.pos.x, this.pos.y, this.r, 0, 2*Math.PI);
+        c.fill();
+    }
+    
+    update(){
+        this.pos.x+=this.vel.x;
+        this.pos.y+=this.vel.y;
+        this.vel.x+=this.acc.x;
+        this.vel.y+=this.acc.y;
+
+        this.vel.x *= 0.99
+        this.vel.y *= 0.99
+
+        // applyForce({x:0, y: this.mass * 0.3}, this)
+        //bakken
+        if(this.pos.y + this.r > canvas.height){
+            this.vel.y *= -0.8
+            this.pos.y = canvas.height - this.r;
+            this.vel.x *= 0.9
+            this.count++;
+        }
+        //taket
+        else if(this.pos.y < this.r){
+            this.vel.y *= -0.8;
+            this.pos.y = this.r;
+        }
+        if(this.pos.x < this.r){
+            this.vel.x = -this.vel.x// * 0.5;
+            this.pos.x = this.r;
+        }
+        else if(this.pos.x + this.r > canvas.width){
+            this.vel.x = -this.vel.x// * 0.5;
+            this.pos.x = canvas.width - this.r;
+        }
+        if(this.count > 15){
+            this.acc.y = 0;
+            this.vel.y = 0;
+            this.pos.y = canvas.height - this.r;
+        }
+
+    //     for(let i = 0; i<ballArr.length; i++){
+    //   if(this==ballArr[i]){continue}
+    //   if(distance(this.pos.x, this.pos.y, ballArr[i].pos.x, ballArr[i].pos.y)< this.r + ballArr[i].r){
+    //     kollisjon(this, ballArr[i])
+    //   }
+    // }
+        this.draw()
+    }
+}
+
+let player = new Ball(100, 400, 10, "blue");
+
+let mouseX, mouseY;
+let deltaX, deltaY, down;
+
+
+let randomInt = (fra, til) => Math.random()*(til-fra) + fra
+let distance = (x1, y1, x2, y2) => Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2))
+
+let ballArr = []
+let colorArr =  ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+
+
+// let posArr = [{x: 100, y: 100, r:10}];
+// let pos;
+
+
+
+
+// function pickRandomPos(){
+//     let radiusen = Math.floor(randomInt(5, 20))
+//         pos = {
+//         x: Math.floor(randomInt(radiusen, canvas.width-radiusen)),
+//         y: Math.floor(randomInt(radiusen, canvas.height-radiusen)),
+//         r: radiusen
+//  }
+//  console.log
+//     for(let i=0; i< posArr.length; i++){
+//         if(distance(pos.x, pos.y, posArr[i].x, posArr[i].y) < pos.r + posArr[i].r ) {
+//             pickRandomPos();
+//         }
+//         else{ posArr.push(pos); return pos}
+//     }
+// }
+
+
+
+// for(let i=0; i<100; i++){
+//     let ballOB = pickRandomPos();
+//     let color = colorArr[Math.floor(randomInt(0, colorArr.length))];
+
+// ballArr.push(new Ball(ballOB.x, ballOB.y, ballOB.r, color))
+// }
+function background(){
+    c.fillStyle = "rgb(119,136,153)"
+    c.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function loop(){
+   background()
+
+    // for(let i=0; i< ballArr.length; i++){
+    //     ballArr[i].update()
+
+    // }
+
+    player.update()
+
+
+        if(down){
+            c.beginPath();
+        c.lineWidth = 5;
+        c.strokeStyle = "red"
+        c.moveTo(player.pos.x, player.pos.y);
+        c.lineTo(mouseX, mouseY);
+        c.stroke();
+        }
+
+    
+    requestAnimationFrame(loop)
+}
+loop()
+
+
+
+
+
+
+function applyForce(forceSum, object, time){
+    object.acc.x = forceSum.x / object.mass; 
+    object.acc.y = forceSum.y / object.mass + gravity;
+
+    setTimeout(function(){
+        object.acc.x = 0;
+        object.acc.y = gravity;
+    }, time)
+}
+
+function removeForce(object){
+    object.acc.x = 0;
+    object.acc.y = 0;
+}
+
+window.addEventListener("mousedown", mouse)
+window.addEventListener("mouseup", mouse)
+window.addEventListener("mousemove", mouse)
+
+
+function mouse(e){
+    if(e.type == "mousedown"){  
+    down = true;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+        
+    
+
+      }  else if(e.type == "mousemove" && down){  
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+}  else if(e.type == "mouseup"){
+    down = false;
+    deltaX = e.clientX - player.pos.x;
+    deltaY = e.clientY - player.pos.y;
+    applyForce({x: deltaX*10, y: deltaY*10}, player, 50);
+
+    player.color = colorArr[Math.floor(randomInt(0, colorArr.length))];
+
+    player.count = 0;
+}
+}
+
+function rotate(vel, angle) {
+    const rotatedVelocities = {
+        x: vel.x * Math.cos(angle) - vel.y * Math.sin(angle),
+        y: vel.x * Math.sin(angle) + vel.y * Math.cos(angle)
+    };
+
+    return rotatedVelocities;
+}
+
+function kollisjon(particle, otherParticle) {
+    const xVelocityDiff = particle.vel.x - otherParticle.vel.x;
+    const yVelocityDiff = particle.vel.y - otherParticle.vel.y;
+
+    const xDist = otherParticle.pos.x - particle.pos.x;
+    const yDist = otherParticle.pos.y - particle.pos.y;
+
+    // Prevent accidental overlap of particles
+    if (xVelocityDiff * xDist + yVelocityDiff * yDist >= 0) {
+
+        // Grab angle between the two colliding particles
+        const angle = -Math.atan2(otherParticle.pos.y - particle.pos.y, otherParticle.pos.x - particle.pos.x);
+
+        // Store mass in var for better readability in collision equation
+        const m1 = particle.mass;
+        const m2 = otherParticle.mass;
+
+        // Velocity before equation
+        const u1 = rotate(particle.vel, angle);
+        const u2 = rotate(otherParticle.vel, angle);
+
+        // Velocity after 1d collision equation
+        const v1 = { x: u1.x * (m1 - m2) / (m1 + m2) + u2.x * 2 * m2 / (m1 + m2), y: u1.y };
+        const v2 = { x: u2.x * (m1 - m2) / (m1 + m2) + u1.x * 2 * m2 / (m1 + m2), y: u2.y };
+
+        // Final vel after rotating axis back to original location
+        const vFinal1 = rotate(v1, -angle);
+        const vFinal2 = rotate(v2, -angle);
+
+        // Swap particle velocities for realistic bounce effect
+        particle.vel.x = vFinal1.x;
+        particle.vel.y = vFinal1.y;
+
+        otherParticle.vel.x = vFinal2.x;
+        otherParticle.vel.y = vFinal2.y;
+    }
+}
+function sjekk(a, b, c){
+    console.log(!!b)
+}
+
+sjekk(1, 1)
+
+
+
+
+
+</script>
+</body>
+</html>
