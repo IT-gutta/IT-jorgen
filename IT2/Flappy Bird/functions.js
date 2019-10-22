@@ -185,25 +185,25 @@ function line(x1, y1, x2, y2){
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-let stroke = true;
-let fill = true;
+let do_stroke = true;
+let do_fill = true;
 
 function doFill(bool){
 
-    if(bool){ fill = true }
-    else{ fill = false }
+    if(bool){ do_fill = true }
+    else{ do_fill = false }
 }
 
 function doStroke(bool){
-    if(bool){ stroke = true }
-    else{ stroke = false }
+    if(bool){ do_stroke = true }
+    else{ do_stroke = false }
 }
 
 function rect(x, y, w, h){
     c.beginPath();
     c.rect(x, y, w, h);
-    if(stroke){ c.stroke() }
-    if(fill){ c.fill() }
+    if(do_stroke){ c.stroke() }
+    if(do_fill){ c.fill() }
     c.closePath()
 }
 
@@ -216,7 +216,7 @@ function strokeWeight(verdi){
 function resolveColission(p1, p2){
     let difX = p2.pos.x - p1.pos.x;
     let difY = p2.pos.y - p1.pos.x;
-
-    let angle = Math.atan2(difY/difX);
+console.log(difX, difY)
+    let angle = Math.atan2(difY, difX);
     console.log(angle)
 }
