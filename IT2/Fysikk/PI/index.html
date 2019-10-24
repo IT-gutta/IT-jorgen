@@ -21,17 +21,20 @@ function Rect(x, y, w, h, dx, color, mass, bool){
         this.pos.add(this.vel);
 
         if(this.pos.x <= 0 && bool){ this.vel.x = -this.vel.x; count++; div.innerHTML= count }
+        // else if(this.pos.x + this.w >= canvas.width){ this.vel.x = -this.vel.x; count++; div.innerHTML= count }
 
         this.draw();
     }
 }
 let r1 = new Rect(100, canvas.height/2, 20, 20, 0, 255, 1, true);
-let r2 = new Rect(600, canvas.height/2-30, 50, 50, -3, 0, 10000)
+let r2 = new Rect(200, canvas.height/2-30, 50, 50, -0.5, 0, 10000, false)
 
 function doesCollide(r1, r2){
     if(r1.pos.x + r1.w <= r2.pos.x|| r1.pos.x >= r2.pos.x + r2.w){ return false }
     return true
 }
+
+div.innerHTML= count
 
 function colission(r1, r2){
     old1 = r1.vel.x;
@@ -42,12 +45,14 @@ function colission(r1, r2){
 
 function animate(){
     requestAnimationFrame(animate);
+    for(let i = 0; i< 10; i++){
     background(100);
     r1.update();
     r2.update();
     if(doesCollide(r1, r2)){
         count++; div.innerHTML = count;
         colission(r1, r2)
+        }
     }
 }
 animate()

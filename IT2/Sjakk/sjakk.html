@@ -1,0 +1,116 @@
+
+<body>
+<script src="functions.js"></script>
+<script>
+createCanvas(600, 600)
+c.scale(canvas.width/8, canvas.height/8)
+
+
+function drawBrett(){
+        for(let i = 0; i < 8; i++){     
+            for(let k = 0; k < 8; k++){
+            if(i%2==0){
+                if(k%2==0){fillColor(240)}
+                else{ fillColor(20) }
+            }
+            else{
+                if(k%2==0){ fillColor(20) }
+                else{ fillColor(240) }
+            }  
+            c.fillRect(k, i, 1, 1)
+        }
+    }
+}
+drawBrett()
+
+let img = new Image()
+img.src = "brikker.png"
+c.drawImage(img, 0, 0, 100, 100, 100, 100, 100, 100);
+
+let turn = "white"
+
+let brikkeArr = [];
+
+class Brikke{
+    constructor(x, y, sx, sy, sw, sh){
+        this.pos = {x: x, y: y}
+        this.sx = sx;
+        this.sy = sy;
+        this.sw = sw;
+        this.sh = sh;
+    }
+    draw(){
+        img.src = this.source;
+        c.drawImage(img, this.pos.x, this.pos.y, 1, 1)
+    }
+}
+
+let brettArr = [
+    [9, 8, 7, 6, 5, 7, 8, 9],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [2, 2, 2, 2, 2, 2, 2, 2],
+    [11, 12, 13, 14, 15, 13, 12, 11]
+]
+let pickedUp = false;
+function sjekkPlass(e){
+    yIndex = Math.floor(e.clientY/(canvas.height/8))
+    xIndex = Math.floor(e.clientX/(canvas.width/8))
+    if(pickedUp){ place()}
+    else{ pickUp(xIndex, yIndex)}
+}
+let picked = 0;
+
+function pickUp(x, y){
+
+    if( picked == 0 && turn=="white" && color(x, y)=="white"){
+        picked = {
+            value: brettArr[y][x],
+            x: x,
+            y: y,
+            type: "white"
+        }
+        pickedUp = true;
+        console.log(picked)
+    }
+
+    else if( picked == 0 && color(x, y)=="black"){
+    picked = {
+        value: brettArr[y][x],
+        x: x,
+        y: y,
+        type: "black"
+    }
+        pickedUp = true;
+    }
+}
+function place(x, y){
+    console.log("plasserer " + picked.value + " på", y, x)
+    if(picked.x ==x && picked.y == y){ picked = 0 }
+
+    else if(color(picked.x, picked.y) != color(x, y)){
+        brettArr[picked.y].splice(picked.x, 1, 0);
+        brettArr[y].splice(x, 1, picked.value);
+        console.table(brettArr)}
+}
+
+
+
+function color(x, y){
+    if(brettArr[y][x] == 9 ||brettArr[y][x] == 8 || brettArr[y][x] == 7 ||brettArr[y][x] == 6 ||brettArr[y][x] == 5 ||brettArr[y][x] == 1){ return "black"}
+    else if(brettArr[y][x] != 0){ return "white"}
+    else if(brettArr[y][x] ==0){ return 0}
+}
+console.log(color(7, 1))
+
+window.addEventListener("click", sjekkPlass)
+const [A, B, C, D, E, F, G, H] = [0, 1, 2, 3, 4, 5, 6, 7];
+
+
+
+
+</script>
+</body>

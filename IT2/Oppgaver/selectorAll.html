@@ -1,0 +1,45 @@
+<head>
+   <style>
+   input{
+       margin:5px;
+       display: block;
+       width: 100px;
+       border-radius: 5px;
+       color: white ;
+       font-family: sans-serif;
+       background-color: rgba(128, 0, 0, 0.8);
+   }
+   #result{
+       color: black;
+   }
+
+   </style> 
+</head>
+<body>
+    <input type="number" name="input">
+    <input type="number" name="input">
+    <input type="number" name="input">
+    <input type="number" name="input">
+    <input type="number" name="input">
+    <input type="number" name="input">
+    <input type="number" name="input">
+    <input type="number" name="input">
+    <input type="number" name="input">
+    <input type="number" name="input">
+
+    <button id="button">Summer</button>
+    <div id="result"></div>
+
+    <script>
+    let inputs = document.querySelectorAll("input")
+    let inputArr = Array.prototype.slice.call(inputs)
+    let btn = document.getElementById("button")
+    let div = document.getElementById("result")
+    btn.addEventListener("click", function(){
+        div.innerHTML = inputArr.map(x => Number(x.value)).reduce((a, b) => a+b)
+    })
+
+    
+    </script>
+
+</body>
