@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bestilling</title>
+    <style>
+    input{
+        display: block;
+        margin-top: 10px
+    }
+    .result{
+        position: absolute;
+        left:500px;
+        top:100px;
+        
+    }
+    </style>
+</head>
+<body>
+        <form class="form">
+         
+                Fornavn:
+                <input type="text" name="bord" required> <br>
+                Etternavn:
+                <input type="text" name="bord" required> <br>
+                Tlf:
+                <input type="number" name="bord" required> <br>
+                Antall personer:
+                <input type="number" name="bord" required min="6" max="12"> <br><br>
+                Valg av 3-retters:
+                <select class="select">
+                    <option value="625">-	Sjømat spesial til 625 kr</option>
+                    <option value="735">-	Skalldyrsaften til 735 kr</option>
+                    <option value="645">-	Juicybeef til 645 kr </option>
+                    <option value="495">-	Vegetarian til 495 kr</option>
+                </select>
+
+                <input type="submit">
+            </form>
+
+            <div class="result"></div>
+            <script>
+            let form = document.querySelector(".form")
+            let info = document.querySelectorAll("input")
+            let sel = document.querySelector(".select")
+            let btn = info[info.length-1]
+            let result = document.querySelector(".result")
+                
+            form.addEventListener("submit", function(e){
+                e.preventDefault()
+                const [f, et, t, a, p] = [info[0].value, info[1].value, info[2].value, info[3].value, sel.value]
+                const sum = a*p
+                result.innerHTML = `Takk for bestillingen ${f} ${et}. Din bestilling er registrert og totalsummen er ${sum} kroner.`
+            })
+            
+            
+            
+            </script>
+</body>
+</html>
+

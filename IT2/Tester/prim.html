@@ -1,0 +1,25 @@
+<script>
+
+function isPrime(num){
+    if(num == 1) return false
+    let i = 2;
+    while(i<num){
+        if(num%i == 0 && num != i) return false
+        i++
+    }
+    return true
+}
+
+function primes(antall){
+    let arr = []
+    let i = 2;
+    while(arr.length < antall){
+        if(isPrime(i)) arr.push(i)
+        i++
+    }
+    console.log(arr)
+}
+primes(100)
+
+
+</script>
