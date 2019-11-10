@@ -1,0 +1,205 @@
+
+<body>
+<script src="functions.js"></script>
+<script>
+createCanvas(600, 600)
+c.scale(canvas.width/8, canvas.height/8)
+
+
+function drawBrett(){
+        for(let i = 0; i < 8; i++){     
+            for(let k = 0; k < 8; k++){
+            if(i%2==0){
+                if(k%2==0){fillColor(240)}
+                else{ fillColor(79, 52, 26) }
+            }
+            else{
+                if(k%2==0){ fillColor(79, 52, 26) }
+                else{ fillColor(240) }
+            }  
+            c.fillRect(k, i, 1, 1)
+        }
+    }
+}
+drawBrett()
+
+let img = new Image()
+img.src = "brikker.png"
+
+let turn = "white"
+
+let brikkeArr = [];
+
+class Brikke{
+    constructor(x, y, sx, sy, sw, sh){
+        this.pos = {x: x, y: y}
+        this.sx = sx;
+        this.sy = sy;
+        this.sw = sw;
+        this.sh = sh;
+    }
+    draw(){
+        c.drawImage(img, this.sx, this.sy, this.sw, this.sh, this.pos.x, this.pos.y, 1, 1)
+    }
+}
+
+let brettArr = [
+    [9, 8, 7, 6, 5, 7, 8, 9],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [2, 2, 2, 2, 2, 2, 2, 2],
+    [11, 12, 13, 14, 15, 13, 12, 11]
+]
+let pickedUp = false;
+function sjekkPlass(e){
+    yIndex = Math.floor(e.clientY/(canvas.height/8))
+    xIndex = Math.floor(e.clientX/(canvas.width/8))
+    if(pickedUp){ place(xIndex, yIndex)}
+    else{ pickUp(xIndex, yIndex)}
+
+
+}
+let picked = 0;
+
+function pickUp(x, y){
+
+    if(turn=="white" && color(x, y)=="white"){
+        picked = {
+            value: brettArr[y][x],
+            x: x,
+            y: y,
+            type: "white",
+            bonde: false
+        }
+        if( y == 6 && picked.value == 2 || y == 1 && picked.value == 1){ picked.bonde = true }
+        pickedUp = true;
+        console.log("hvit")
+    }
+
+    else if(turn=="black" && color(x, y)=="black"){
+        picked = {
+            value: brettArr[y][x],
+            x: x,
+            y: y,
+            type: "black"
+        }
+        pickedUp = true;
+    }
+    else{ picked = 0}
+    
+    console.log(picked)
+}
+
+function switchTurn(){
+    if(turn =="white"){
+        turn = "black"
+    }
+    else{ turn = "white"}
+}
+function place(x, y){
+    console.log("plasserer " + picked.value + " på", y, x)
+    if(picked == 0){pickedUp = false; return}
+    if(picked.x == x && picked.y == y){ picked = 0; pickedUp=false; return}
+    
+    else if(picked.type != color(x, y) && isValid(x, y)){
+        brettArr[picked.y].splice(picked.x, 1, 0);
+        brettArr[y].splice(x, 1, picked.value);
+        console.table(brettArr);
+        pickedUp = false;
+        checkQueen(x, y)
+        switchTurn();
+        update() }
+    else{ picked = 0; pickedUp = false; return }
+       
+}
+
+
+function update(){
+    brikkeArr = []
+    drawBrett()
+    let sx, sy;
+    brettArr.forEach((row, y) => {
+        row.forEach((value, x) => {
+            switch(value){
+                case 2:  sx = 840;  sy = 150; break
+                case 1:  sx = 840;  sy = 0; break
+                case 5:  sx = 0;  sy = 0; break
+                case 15:  sx = 0;  sy = 150; break
+                case 6:  sx = 180;  sy = 0; break
+                case 14:  sx = 180;  sy = 150; break
+                case 9:  sx = 340;  sy = 0; break
+                case 11:  sx = 340;  sy = 150; break
+                case 7:  sx = 510;  sy = 0; break
+                case 13:  sx = 510;  sy = 150; break
+                case 8:  sx = 670;  sy = 0; break
+                case 12:  sx = 670;  sy = 150; break
+            }
+            if(value!=0){
+            brikkeArr.push(new Brikke(x, y, sx, sy, 140, 140))
+            }
+        })
+    })
+
+    for(let i=0; i< brikkeArr.length; i++){
+        brikkeArr[i].draw()
+    }
+}
+
+function color(x, y){
+    if(brettArr[y][x] == 9 ||brettArr[y][x] == 8 || brettArr[y][x] == 7 ||brettArr[y][x] == 6 ||brettArr[y][x] == 5 ||brettArr[y][x] == 1){ return "black"}
+    else if(brettArr[y][x] == 2 ||brettArr[y][x] == 11 || brettArr[y][x] == 12 ||brettArr[y][x] == 13 ||brettArr[y][x] == 14 ||brettArr[y][x] == 15){ return "white"}
+    else if(brettArr[y][x]==0){ return 0}
+}
+
+canvas.addEventListener("click", sjekkPlass)
+const [A, B, C, D, E, F, G, H] = [0, 1, 2, 3, 4, 5, 6, 7];
+
+img.onload = function(){
+update()
+}
+
+function isValid(x, y){
+    switch(picked.value){
+        case 2: if(( (picked.y - y ==  2 && brettArr[picked.y-1][picked.x]==0 && picked.bonde)  || picked.y - y == 1  ) && picked.x == x && brettArr[y][x] == 0){ picked.bonde = false; return true}   else if( color(x, y) == "black" && ((picked.x - x ==1 || picked.x -x ==-1) && picked.y - y==1)){ picked.bonde = false; return true} break
+        case 1: if(( (picked.y - y ==  2 && brettArr[picked.y+1][picked.x]==0 && picked.bonde)  || picked.y - y == -1 ) && picked.x == x && brettArr[y][x] == 0){ picked.bonde = false; return true}   else if( color(x, y) == "black" && ((picked.x - x ==1 || picked.x -x ==-1) && picked.y - y==1)){ picked.bonde = false; return true} break
+        case 9: if((y == picked.y || x == picked.x) && checkPath(x, y)){return true}; break
+        case 11:if((y == picked.y || x == picked.x) && checkPath(x, y)){return true}; break
+        case 13: if(Math.abs((picked.y-y)/(picked.x-x)) == 1){ return true} break
+        case 7: if(Math.abs((picked.y-y)/(picked.x-x)) == 1){ return true} break
+        case 12: if((Math.abs(picked.x-x) == 2 && Math.abs(picked.y-y) ==1) || (Math.abs(picked.x-x) ==1 && Math.abs(picked.y-y) ==2)){ return true} break
+        case 8: if((Math.abs(picked.x-x) == 2 && Math.abs(picked.y-y) ==1) || (Math.abs(picked.x-x) ==1 && Math.abs(picked.y-y) ==2)){ return true} break
+        case 15: if(picked.x-x < 2 && picked.y-y < 2){ return true} break
+        case 5: if(picked.x-x < 2 && picked.y-y < 2){ return true} break
+        case 14: if((Math.abs((picked.y-y)/(picked.x-x)) == 1) || (y == picked.y || x == picked.x)){ return true} break
+        case 6: if((Math.abs((picked.y-y)/(picked.x-x)) == 1) || (y == picked.y || x == picked.x)){ return true} break
+    }
+    return false
+ 
+}
+
+function doesCollide(x, y, value){
+}
+
+function checkQueen(x, y){
+    if(picked.value == 2 && y == 0){ brettArr[0].splice(x, 1, 14)}
+}
+
+function checkPath(x, y){
+    switch(picked.value){
+        case 9: if(x - picked.x > 0){ for(let i=picked.x; i<x; i++){ if(checkCollide(i, y)){ return false}}return true} else if(x-picked.x<0){ for(let i=picked.x; i>x; i--){ if(checkCollide(i, y)){return false}} return true}
+        case 11: if(x - picked.x > 0){ for(let i=picked.x; i<x; i++){ if(checkCollide(i, y)){ return false}}return true} else if(x-picked.x<0){ for(let i=picked.x; i>x; i--){ if(checkCollide(i, y)){return false}} return true}
+    }
+
+}
+function checkCollide(x, y){
+    if(brettArr[y][x] != 0){ return true}
+    return false
+}
+
+
+
+</script>
+</body>

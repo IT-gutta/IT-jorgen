@@ -11,7 +11,9 @@ const c = canvas.getContext("2d");
 canvas.width = window.innerWidth-20;
 canvas.height = window.innerHeight-20;
 
-const gravity = 1;
+const gravity = 0.1;
+
+let score = 0;
 
 window.addEventListener("resize", function(){
     canvas.width = window.innerWidth-20;
@@ -19,10 +21,11 @@ canvas.height = window.innerHeight-20;
 })
 
 class Ball{
-    constructor(x, y, r, color){
+    constructor(x, y, dx, dy, r, color, bool){
         this.pos = { x: x, y: y }
-        this.vel = { x: 0, y: 0 }
-        this.acc = { x: 0, y: gravity }
+        this.vel = { x: dx, y: dy }
+        this.acc = { x: 0, y: 0 }
+        if(bool){ this.acc.y = gravity}
         this.color = color;
         this.r = r;
         this.mass = this.r*10
@@ -73,26 +76,46 @@ class Ball{
             this.pos.y = canvas.height - this.r;
         }
 
-    //     for(let i = 0; i<ballArr.length; i++){
-    //   if(this==ballArr[i]){continue}
-    //   if(distance(this.pos.x, this.pos.y, ballArr[i].pos.x, ballArr[i].pos.y)< this.r + ballArr[i].r){
-    //     kollisjon(this, ballArr[i])
-    //   }
-    // }
         this.draw()
     }
 }
 
-let player = new Ball(100, 400, 10, "blue");
-
-let mouseX, mouseY;
-let deltaX, deltaY, down;
+let particleArr = []
 
 
-let randomInt = (fra, til) => Math.random()*(til-fra) + fra
-let distance = (x1, y1, x2, y2) => Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2))
+class Enemy{
+    constructor(x, y, r, c){
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.c = c;
+    }
 
-let ballArr = []
+    draw(){
+        c.beginPath();
+        c.fillStyle = this.c;
+        c.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+        c.fill();
+    }
+
+    explode(){
+    
+        let antallParticles = 80;
+        for(let j = 0; j < antallParticles; j++){
+            let pos = {x: this.x + Math.cos(randomInt(0, 2*Math.PI)) * randomInt(1, 10),
+             y: this.y + Math.sin(randomInt(0, 2*Math.PI)) * randomInt(1, 10)}
+            let vel = {x: Math.cos(Math.atan2(pos.x-this.x, pos.y-this.y)),
+            y: Math.sin(Math.atan2(pos.x-this.x, pos.y-this.y))}
+            let rad = randomInt(1, 2)
+
+            particleArr.push(new Ball(pos.x, pos.y, vel.x, vel.y, rad, this.c))
+        }
+        setTimeout(function(){
+            particleArr.splice(0, antallParticles);
+        }, 2000)
+    }
+}
+
 let colorArr =  ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
 		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
 		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
@@ -102,51 +125,40 @@ let colorArr =  ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
 		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
 		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
-		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+          '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+          
+let randomInt = (fra, til) => Math.random()*(til-fra) + fra
+let distance = (x1, y1, x2, y2) => Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2))
+
+let eArr = [];
+function createMap(){
+    eArr = []
+for(let i = 0; i < 100; i++){
+    let radius = randomInt(8, 14);
+    let xPos = randomInt(radius, canvas.width-radius);
+    let yPos = randomInt(radius, canvas.height-radius);
+    let col = colorArr[Math.floor(randomInt(0, colorArr.length))];
+
+    eArr.push(new Enemy(xPos, yPos, radius, col))
+    }
+}
+createMap()
+let player = new Ball(100, 400, 0, 0, 10, "black", true);
+
+let mouseX, mouseY;
+let deltaX, deltaY, down;
 
 
-// let posArr = [{x: 100, y: 100, r:10}];
-// let pos;
 
 
 
-
-// function pickRandomPos(){
-//     let radiusen = Math.floor(randomInt(5, 20))
-//         pos = {
-//         x: Math.floor(randomInt(radiusen, canvas.width-radiusen)),
-//         y: Math.floor(randomInt(radiusen, canvas.height-radiusen)),
-//         r: radiusen
-//  }
-//  console.log
-//     for(let i=0; i< posArr.length; i++){
-//         if(distance(pos.x, pos.y, posArr[i].x, posArr[i].y) < pos.r + posArr[i].r ) {
-//             pickRandomPos();
-//         }
-//         else{ posArr.push(pos); return pos}
-//     }
-// }
-
-
-
-// for(let i=0; i<100; i++){
-//     let ballOB = pickRandomPos();
-//     let color = colorArr[Math.floor(randomInt(0, colorArr.length))];
-
-// ballArr.push(new Ball(ballOB.x, ballOB.y, ballOB.r, color))
-// }
 function background(){
-    c.fillStyle = "rgb(119,136,153)"
+    c.fillStyle = "white"
     c.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function loop(){
    background()
-
-    // for(let i=0; i< ballArr.length; i++){
-    //     ballArr[i].update()
-
-    // }
 
     player.update()
 
@@ -160,7 +172,24 @@ function loop(){
         c.stroke();
         }
 
-    
+for(let i = 0; i < eArr.length; i++){
+    eArr[i].draw();
+
+    if(distance(player.pos.x, player.pos.y, eArr[i].x, eArr[i].y) < player.r + eArr[i].r){
+        eArr[i].explode()
+       eArr.splice(i, 1);
+       score ++;
+    }
+}
+for(let k = 0; k < particleArr.length; k++){
+    particleArr[k].update()
+}        
+
+    c.font = "40px Arial";
+    c.fillStyle = "black"
+    c.fillText(score, 20, 40)
+
+    if(score == 50){ createMap(); score = 0}
     requestAnimationFrame(loop)
 }
 loop()
@@ -171,8 +200,8 @@ loop()
 
 
 function applyForce(forceSum, object, time){
-    object.acc.x = forceSum.x / object.mass; 
-    object.acc.y = forceSum.y / object.mass + gravity;
+    object.acc.x = forceSum.x / (object.mass*10); 
+    object.acc.y = forceSum.y / (object.mass*10) + gravity;
 
     setTimeout(function(){
         object.acc.x = 0;
@@ -208,7 +237,7 @@ function mouse(e){
     deltaY = e.clientY - player.pos.y;
     applyForce({x: deltaX*10, y: deltaY*10}, player, 50);
 
-    player.color = colorArr[Math.floor(randomInt(0, colorArr.length))];
+    // player.color = colorArr[Math.floor(randomInt(0, colorArr.length))];
 
     player.count = 0;
 }
@@ -222,50 +251,6 @@ function rotate(vel, angle) {
 
     return rotatedVelocities;
 }
-
-function kollisjon(particle, otherParticle) {
-    const xVelocityDiff = particle.vel.x - otherParticle.vel.x;
-    const yVelocityDiff = particle.vel.y - otherParticle.vel.y;
-
-    const xDist = otherParticle.pos.x - particle.pos.x;
-    const yDist = otherParticle.pos.y - particle.pos.y;
-
-    // Prevent accidental overlap of particles
-    if (xVelocityDiff * xDist + yVelocityDiff * yDist >= 0) {
-
-        // Grab angle between the two colliding particles
-        const angle = -Math.atan2(otherParticle.pos.y - particle.pos.y, otherParticle.pos.x - particle.pos.x);
-
-        // Store mass in var for better readability in collision equation
-        const m1 = particle.mass;
-        const m2 = otherParticle.mass;
-
-        // Velocity before equation
-        const u1 = rotate(particle.vel, angle);
-        const u2 = rotate(otherParticle.vel, angle);
-
-        // Velocity after 1d collision equation
-        const v1 = { x: u1.x * (m1 - m2) / (m1 + m2) + u2.x * 2 * m2 / (m1 + m2), y: u1.y };
-        const v2 = { x: u2.x * (m1 - m2) / (m1 + m2) + u1.x * 2 * m2 / (m1 + m2), y: u2.y };
-
-        // Final vel after rotating axis back to original location
-        const vFinal1 = rotate(v1, -angle);
-        const vFinal2 = rotate(v2, -angle);
-
-        // Swap particle velocities for realistic bounce effect
-        particle.vel.x = vFinal1.x;
-        particle.vel.y = vFinal1.y;
-
-        otherParticle.vel.x = vFinal2.x;
-        otherParticle.vel.y = vFinal2.y;
-    }
-}
-function sjekk(a, b, c){
-    console.log(!!b)
-}
-
-sjekk(1, 1)
-
 
 
 

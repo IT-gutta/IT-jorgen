@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>
+    Velg et lag for mer info
+  </h1>
+  <select id="sel">
+
+  </select>
+  <div id="div">
+  </div>
+
+
+    <script type="text/javascript">
+
+      let sel = document.getElementById("sel");
+      let div = document.getElementById("div");
+      let lag = [
+      ["Velg lag"],
+      ["Manchester United", "Old Trafford", 78000],
+      ["Liverpool", "Anfield", 60000],
+      ["Chelsea", "Stamford Bridge", 45000]
+      ]
+
+
+      lag.forEach((row) => {
+        sel.innerHTML += `<option> ${row[0]} </option>`
+      })
+      sel.addEventListener("change", function(){
+
+        let index = sel.selectedIndex;
+        div.innerHTML = `Du har valgt laget ${lag[index][0]}. Hjemmebanen heter ${lag[index][1]} og har ${lag[index][2]} plasser`
+      })
+
+    </script>
+  </body>
+</html>

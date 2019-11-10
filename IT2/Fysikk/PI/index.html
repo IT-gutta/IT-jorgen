@@ -1,0 +1,63 @@
+<body>
+    <div id="div"></div>
+<script src="functions.js"></script>
+<script>
+createCanvas(800, 600)
+let div = document.getElementById("div")
+let count = 0;
+function Rect(x, y, w, h, dx, color, mass, bool){
+    this.pos = new Vector(x, y);
+    this.w = w;
+    this.h = h;
+    this.vel = new Vector(dx, 0);
+    this.color = color;
+    this.m = mass;
+
+    this.draw = function(){
+        fillColor(0, this.color, 0);
+        rect(this.pos.x, this.pos.y, this.w, this.h);
+    }
+    this.update = function(){
+        this.pos.add(this.vel);
+
+        if(this.pos.x <= 0 && bool){ this.vel.x = -this.vel.x; count++; div.innerHTML= count }
+        // else if(this.pos.x + this.w >= canvas.width){ this.vel.x = -this.vel.x; count++; div.innerHTML= count }
+
+        this.draw();
+    }
+}
+let r1 = new Rect(100, canvas.height/2, 20, 20, 0, 255, 1, true);
+let r2 = new Rect(200, canvas.height/2-30, 50, 50, -0.5, 0, 10000, false)
+
+function doesCollide(r1, r2){
+    if(r1.pos.x + r1.w <= r2.pos.x|| r1.pos.x >= r2.pos.x + r2.w){ return false }
+    return true
+}
+
+div.innerHTML= count
+
+function colission(r1, r2){
+    old1 = r1.vel.x;
+    old2 = r2.vel.x;
+    r1.vel.x = (2*r2.m*old2 + old1*(r1.m-r2.m))/(r1.m+r2.m)
+    r2.vel.x = (2*r1.m*old1 + old2*(r2.m-r1.m))/(r1.m+r2.m)
+}
+
+function animate(){
+    requestAnimationFrame(animate);
+    for(let i = 0; i< 10; i++){
+    background(100);
+    r1.update();
+    r2.update();
+    if(doesCollide(r1, r2)){
+        count++; div.innerHTML = count;
+        colission(r1, r2)
+        }
+    }
+}
+animate()
+
+
+
+</script>
+</body>

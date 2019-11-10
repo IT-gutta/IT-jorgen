@@ -1,0 +1,26 @@
+<body>
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <script>
+        const div1 = document.querySelector("#div1")
+        const div2 = document.querySelector("#div2")
+        let litenArr = ["katt1.jpg", "katt2.jpg"]
+        let storArr = ["katt1Stort.jpg", "katt2Stort.jpg"]
+        litenArr.forEach(item => {
+            div1.innerHTML += `<img src=${item} class='bilde'>`
+        })
+        let bildeArr = document.querySelectorAll(".bilde")
+        bildeArr.forEach(item => {
+            item.addEventListener("mouseover", function(){
+                div2.innerHTML = `<img src=${storArr[Array.prototype.indexOf.call(bildeArr, item)]}>`
+            })
+        })
+        bildeArr.forEach(item => {
+            item.addEventListener("mouseout", function(){
+                div2.innerHTML = ""
+            })
+        })
+       
+        
+        </script>
+</body>

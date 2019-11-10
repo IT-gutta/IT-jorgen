@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <style>
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vW;
+            flex-direction: column;
+            background-image: radial-gradient(white 30%, #5CACEE 40%);
+        }
+        #res{
+            margin-top: 20px;
+            font-size: 16px;
+            font-family: sans-serif;
+
+        }
+        #sel{
+            width: 100px;
+            -webkit-appearance: none;
+            background-image: linear-gradient(#008B8B, #00C5CD);
+            border-radius: 5px;
+            font-size: 20px;
+            font-family: serif;
+        }
+        </style>
+    </head>
+    <body>
+        <select id="sel">
+            <option value="Sverige">Sverige</option>
+            <option value="Norge">Norge</option>
+            <option value="Danmark">Danmark</option>
+        </select>
+        <div id="res"></div>
+        <script>
+
+        let sel = document.getElementById("sel")
+        let res = document.getElementById("res")
+        let landArr = [
+            {land: "Sverige", hovedstad: "Stockholm", myntenhet: "SEK"},
+            {land: "Norge",   hovedstad: "Oslo",      myntenhet: "NOK"},
+            {land: "Danmark", hovedstad: "København", myntenhet: "DAK"}
+        ]
+        sel.addEventListener("change", function(){
+            const x = landArr[sel.selectedIndex]
+            res.innerHTML = `Du har valgt landet: ${x.land}, som har hovedstad: ${x.hovedstad}, og har myntenheten: ${x.myntenhet}` 
+        })
+        </script>
+    </body>
+</html>

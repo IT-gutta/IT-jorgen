@@ -1,0 +1,70 @@
+<body>
+<script src="functions.js"></script>
+<script>
+
+createCanvas(1300, 600);
+class Ball{
+    constructor(midX, midY, r, color, angle, vel, R, bool){
+        this.midX = midX;
+        this.midY = midY;
+        this.x = this.midX;
+        this.y = this.midY;
+        this.vel = vel;
+        this.r = r;
+        this.color = color;
+        this.angle = angle;
+        this.R = R;
+        this.bool = bool;
+    }
+    draw(){
+    c.beginPath()
+    c.strokeStyle = "black";
+    c.arc(this.midX, this.midY, this.R, 0, 2*Math.PI);
+    c.stroke();
+    c.closePath();
+
+    if(this.bool){
+        c.beginPath();
+        c.fillStyle = this.color
+        c.arc(this.x, this.y, this.r, 0, 2*Math.PI)
+        c.fill();
+        c.closePath()
+        }
+    }
+    update(){
+        this.angle += this.vel
+        this.x = this.midX + Math.cos(this.angle)*this.R
+        this.y = this.midY + Math.sin(this.angle)*this.R
+        
+        this.draw()
+    }
+}
+let ball1 = new Ball(600, 250, 0, "sike", 0, 0.003, 150, false)
+let ball2 = new Ball(0, 0, 0, "sike", Math.PI, -0.01, 100, false)
+let ball3 = new Ball(0, 0, 0, "sike", 3*Math.PI/2, 0.04, 60, false)
+let ball4 = new Ball(0, 0, 10, "red", 0, -0.1, 40, true)
+
+
+
+function animate(){
+    requestAnimationFrame(animate);
+    // c.clearRect(0, 0, canvas.width, canvas.height);
+    background("lightblue")
+    ball2.midX = ball1.x;
+    ball2.midY = ball1.y;
+    ball3.midX = ball2.x;
+    ball3.midY = ball2.y;
+    ball4.midX = ball3.x;
+    ball4.midY = ball3.y;
+    ball1.update()
+    ball2.update()
+    ball3.update()
+    ball4.update()
+
+}
+animate()
+
+
+
+</script>
+</body>

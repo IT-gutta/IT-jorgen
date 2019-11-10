@@ -1,0 +1,78 @@
+<body>
+    <script src="functions.js"></script>
+    <script>
+    createCanvas(600, 600)
+    console.log("hei")
+    background(100)
+
+    
+       
+    const roter = (x, y, a) => [x*Math.cos(a)-y*Math.sin(a), x*Math.sin(a)+y*Math.cos(a)]
+    
+
+    const matmul = (matrix, vector) => [vector[0]*matrix[0][0]+vector[1]*matrix[0][1], vector[0]*matrix[1][0]+vector[1]*matrix[1][1]]
+    console.log(matmul([[1, 1], [0, 1]], [0, 1]))
+
+    let start = [
+        [60, 30],
+        [60, -30],
+        [120, 30],
+        [120, -30]
+    ]
+
+    
+
+    let end = [
+        [],
+        [],
+        [],
+        []
+    ]
+    let posx = 300
+    let posy = 300
+
+    function newPos(angle){
+        end[0] = roter(start[0][0], start[0][1], angle)
+        end[1] = roter(start[1][0], start[1][1], angle)
+        end[2] = roter(start[2][0], start[2][1], angle)
+        end[3] = roter(start[3][0], start[3][1], angle)
+    }
+    function draw(){
+        c.fillStyle = "red"
+        end.forEach(arr => {
+            c.beginPath()
+            c.arc(posx+arr[0], posy+arr[1], 4, 0, 2*Math.PI)
+            c.fill()
+            c.closePath()
+        })
+        c.beginPath()
+        c.strokeStyle = "black"
+        c.moveTo(posx+end[0][0], posy+end[0][1])
+        c.lineTo(posx+end[1][0], posy+end[1][1])
+        c.moveTo(posx+end[1][0], posy+end[1][1])
+        c.lineTo(posx+end[3][0], posy+end[3][1])
+        c.moveTo(posx+end[3][0], posy+end[3][1])
+        c.lineTo(posx+end[2][0], posy+end[2][1])
+        c.moveTo(posx+end[2][0], posy+end[2][1])
+        c.lineTo(posx+end[0][0], posy+end[0][1])
+
+
+        c.moveTo(posx, 0)
+        c.lineTo(posx, canvas.height)
+        c.moveTo(0, posy)
+        c.lineTo(canvas.width, posy)
+        c.stroke()
+       
+    }
+
+    let ang = 0
+    setInterval(function(){
+        background(100)
+        ang+=0.02
+        newPos(ang)
+        draw()
+    }, 1)
+    
+    
+    </script>
+</body>

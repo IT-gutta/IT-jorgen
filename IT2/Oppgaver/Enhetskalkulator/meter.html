@@ -1,0 +1,79 @@
+
+<head>
+    <style>
+ #sel1{
+    height: 18px;
+    position: absolute;
+    top:205;
+    left: 200
+}
+ #sel2{
+    height: 18px;
+    position: absolute;
+    top:205;
+    left: 390
+}
+input{
+    position: absolute;
+    top:250;
+    left:120
+}
+#btn{
+    position: absolute;
+    top:250;
+    left: 300
+}
+#resultat{
+    color:white;
+    position: absolute;
+    top: 250;
+    left: 400
+}
+    </style>
+</head>
+<body>
+    <img src="Enhetskalk.jpg">
+    <div>
+        <select id="sel1">
+            <option value="mm">millimeter</option>
+            <option value="cm">centimeter</option>
+            <option value="dm">desimeter</option>
+            <option value="m">meter</option>
+            <option value="km">kilometer</option>
+            <option value="Mil">mil</option>
+        </select>
+        <select id="sel2">
+            <option value="mm">millimeter</option>
+            <option value="cm">centimeter</option>
+            <option value="dm">desimeter</option>
+            <option value="m">meter</option>
+            <option value="km">kilometer</option>
+            <option value="Mil">mil</option>
+        </select>
+     </div>
+     <br>
+     <div>
+       <input type="number">
+     </div>
+     <br>
+     <button id="btn">Konverter</button>
+     <br>
+     <div id="resultat"></div>
+     
+     <script>
+     let fra = document.getElementById("sel1")
+     let til = document.getElementById("sel2")
+     let nummer = document.querySelector("input")
+     let resultat = document.getElementById("resultat")
+     let btn = document.getElementById("btn")
+     
+     let faktorArr = [1000, 100, 10, 1, 0.001, 0.0001]
+     
+     btn.addEventListener("click", beregn)
+     let result;
+     function beregn(){
+             result = (nummer.value/(faktorArr[fra.selectedIndex]/faktorArr[til.selectedIndex])).toFixed(5).replace(/\.?0+$/, '')
+             resultat.innerHTML = result +" " + til.value
+     }
+     </script>
+</body>

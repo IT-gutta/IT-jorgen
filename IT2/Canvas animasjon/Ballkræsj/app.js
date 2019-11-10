@@ -190,13 +190,11 @@ c.clearRect(0, 0, innerWidth, innerHeight);
   }
 
 //tekst
-c.fillText(canvas.width/2, canvas.height/2, "HEiu")
-c.fill();
-
 
 
 }
 animate();
+
 
 
 window.addEventListener("resize", size);

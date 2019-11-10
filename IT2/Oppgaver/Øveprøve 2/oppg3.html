@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   
+</head>
+<body>
+
+    <input type="number" min="2002" max="2007">
+    <input type="number" min="2002" max="2007">
+    <script>
+    let info = [
+        {year: 2002, antall: 9631},
+        {year: 2003, antall: 8593},
+        {year: 2004, antall: 8363},
+        {year: 2005, antall: 8128},
+        {year: 2006, antall: 8514},
+        {year: 2007, antall: 8534}
+    ]
+    let number1 = document.querySelectorAll("input")[0]
+    let number2 = document.querySelectorAll("input")[1]
+
+    function visres(){
+        const [n1, n2] = [number1.value, number2.value]
+        const [a1, a2] = [info[n1-2002].antall, info[n2-2002].antall]
+       
+    }
+
+    number1.onchange = number2.onchange = visres
+
+    </script>
+</body>
+</html>
